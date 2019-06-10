@@ -79,13 +79,21 @@ create table partido(
 	goles_visitante int --- Para la tabla geberal
 );
 
-create table gol(
+/*create table gol(
 	id_partido int references partido(id_partido),
 	id_jugador int,
 	minuto int,
 	equipo_en_contra int CHECK (equipo_en_contra>0), -- Es el id_equipo que recibio el gol
 	equipo_en_favor_de int CHECK (equipo_en_favor_de >0), --- Es el id_equipo que ANOTADOR
 	tipo_anotacion varchar (15),
+	elimnado boolean default false
+);*/
+
+create table gol(
+	id_partido int references partido(id_partido),
+	id_equipo int references equipo(id_equipo),
+	id_jugador int,
+	minuto int,
 	elimnado boolean default false
 );
 
@@ -98,9 +106,23 @@ create table tarjeta(
 	elimnado boolean default false
 );
 
+create table titular(
+	id_partido int references partido(id_partido),
+	id_equipo int references equipo(id_equipo),
+	id_jugador int CHECK (id_jugador>0),
+	elimnado boolean default false
+);
+
+create table suplente(
+	id_partido int references partido(id_partido),
+	id_equipo int references equipo(id_equipo),
+	id_jugador int CHECK (id_jugador>0),
+	elimnado boolean default false
+);
+
 create table cambio (
 	id_partido int references partido(id_partido),
-	id_equipo int CHECK (id_equipo>0),
+	id_equipo int references equipo(id_equipo),
 	jugador_entra int CHECK (jugador_entra>0),
 	jugador_sale int CHECK (jugador_sale>0),
 	minuto int,
