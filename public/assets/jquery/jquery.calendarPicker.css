@@ -1,0 +1,73 @@
+.calBox {
+  background-color: white;
+  padding: 2px;
+  text-align: center;
+  color: #84596B;
+}
+
+.calElement {
+  display: inline-block;
+  overflow:hidden;
+}
+
+.calYear {
+  font-size: 20px;
+  border-bottom: 2px dashed #84596B;
+  padding-bottom: 5px;
+  margin-bottom: 5px
+}
+
+.calYear .calElement {
+  border: 1px solid #84596B;
+}
+
+.calMonth {
+  border-bottom: 2px dashed #84596B;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.calMonth .calElement {
+  font-size: 14px;
+  border: 1px solid #84596B;
+}
+
+.calDay {
+}
+
+.calDay .calElement {
+  font-size: 12px;
+  border: 1px solid #999999;
+}
+
+
+
+span.calElement.next:hover, span.calElement.prev:hover {
+  border: 1px solid #999999;
+  cursor: pointer;
+}
+
+.calDay .calElement .dayNumber {
+  font-size: 20px;
+}
+
+
+.calElement.selected {
+  background-color: #84596B;
+  border: 1px solid #84596B;
+  color: white;
+  -moz-border-radius: 3px
+}
+
+span.calElement:hover {
+  background-color: #84596B;
+  border: 1px solid #84596B;
+  color: white;
+  -moz-border-radius: 3px;
+  cursor: pointer;
+}
+
+.calElement.today {
+  border: 1px solid #e0e000;
+  -moz-border-radius: 3px
+}
