@@ -102,7 +102,7 @@ Route::get('jugador_equipo/no_en_equipo/{id}','fixture\JugadorEquipoController@l
 Route::get('jugador_equipo/en_equipo_json/{id}','fixture\JugadorEquipoController@listJugadoresInEquipoTable');
 Route::get('jugador_equipo/no_en_equipo_json/{id}','fixture\JugadorEquipoController@listJugadoresNotInEquipoTable');
 
-
+Route::get('pdfResultados','info_arbitral\partidos_controller@pdfResultados');
 
 Route::get('mapa',function () {
     return view('fixture/mapa');

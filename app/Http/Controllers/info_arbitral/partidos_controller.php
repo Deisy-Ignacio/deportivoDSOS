@@ -15,7 +15,7 @@ use App\Http\Models\MTarjeta;
 use App\Http\Models\MTitular;
 use App\Http\Models\MSuplente;
 use App\Http\Models\MCambio;
-
+use Codedge\Fpdf\Facades\Fpdf;
 use DB;
 
 
@@ -242,6 +242,46 @@ class partidos_controller extends Controller
                             'jugador_sale'=>$jugador_sale,'minuto'=>$minuto]);
         }
         //return back();
+    }
+
+    public function pdfResultados(){
+        $date1 = date("Y-m-d"); 
+        $al = MTorneo::select('id_torneo','nombre','categoria','fecha_inaguracion','fecha_termino','elimnado')
+		->where('fecha_termino','>=',$date1)->get();
+        $pathFile = storage_path(). '/recipe.pdf';
+        Fpdf::AddPage();
+        Fpdf::SetFont('Courier', 'B', 30);
+        $i=0;
+
+        Fpdf::Cell(190,9,'TORNEOS EN CURSO',1,1,'C',false);
+        Fpdf::Cell(60,10,'',0,1,'C');
+
+        Fpdf::SetFont('Courier', 'B', 14);
+        Fpdf::Cell(10,3*$i,'ID');
+        Fpdf::Cell(50,3*$i,utf8_decode('NOMBRE'));
+        Fpdf::Cell(30,3*$i,'CATEGORIA');
+        Fpdf::Cell(50,3*$i,'FECHA INICIO');
+        Fpdf::Cell(20,3*$i,'FECHA TERMINO',0,1,'C');
+
+        Fpdf::Cell(20,3*$i,'',0,1,'C');
+        $i++;
+        Fpdf::Cell(20,3*$i,'',0,1,'C');
+        $i++;
+
+        Fpdf::SetFont('Arial', '', 12);
+        foreach($al as $key => $value){
+            if($value->elimnado != true){
+            Fpdf::Cell(10,5*$i,$value->id_torneo);
+            Fpdf::Cell(60,5*$i,utf8_decode($value->nombre));
+            Fpdf::Cell(20,5*$i,utf8_decode($value->categoria));
+            Fpdf::Cell(50,5*$i,$value->fecha_inaguracion);
+            Fpdf::Cell(20,5*$i,$value->fecha_termino,0,1,'C');
+            }
+        }
+
+        Fpdf::Output('F', $pathFile);
+        $headers = ['Content-Type' => 'application/pdf'];
+        return response()->file($pathFile, $headers);
     }
 
 
